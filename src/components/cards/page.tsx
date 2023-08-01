@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import photo from "/image/photo2.png";
 import Image from "next/image";
-import CommentBtn from "../commentBtn/page";
 import { useSelector } from "react-redux/es/exports";
 const Cards = () => {
   let id = uuidv4();

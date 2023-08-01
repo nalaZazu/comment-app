@@ -8,64 +8,102 @@ export const userData = createSlice({
   initialState,
   reducers: {
     commentReducer: (state, action) => {
-      
-      state.comment = action.payload
-      // state.comment = [...state.comment,
-      //   JSON.parse(JSON.stringify(action.payload))
-      //   // action.payload
-      // ];
+      console.log("1data --", action.payload);
+      // state.comment = action.payload
+      state.comment = action.payload.comment;
     },
     commentRemoveReducer: (state, action) => {
       const itemId = action.payload;
       state.comment = state.comment.filter((item: any) => item.id !== itemId);
     },
-
-    // commentRemoveReducer: (state, action) => {
-    //   const { commentId, replyId } = action.payload;
-    //   console.log("action payload", action.payload);
-
-    //   // const comment = state.comments.find((c: any) => c.id === commentId);
-    //   // if (comment) {
-    //   //   comment.reply = comment.reply.filter((r: any) => r.id !== replyId);
-    //   // }
-    // },
-    // commentRemoveReducer: (state, action) => {
-    //   const { commentId, replyId } = action.payload;
-
-    //   const updatedComments = state.comment.map((comment: any) => {
-    //     if (comment.id === commentId) {
-    //       return {
-    //         ...comment,
-    //         reply: comment.reply.filter((r: any) => r.id !== replyId),
-    //       };
-    //     }
-    //     return comment;
-    //   });
-
-    //   state.comment = updatedComments.filter((c: any) => c.reply.length > 0);
-    // },
     commentRemoveReplyReducer: (state, action) => {
-      const { commentId, replyId } = action.payload;
-      console.log("action payload" , action.payload);
-      
-      const commentIndex = state.comment.findIndex((c: any) => c.id === commentId);
-      if (commentIndex !== -1) {
-        state.comment[commentIndex].reply = state.comment[commentIndex].reply.filter(
-          (r: any) => r.id !== replyId
-        );
-      }
+      const itemId = action.payload;
+      console.log(itemId, "action.payload");
+
+      state.comment = state.comment.map((r: any) => {
+        console.log(r, "vlaue of r");
+
+        if (r.id === itemId.item) {
+          // Filter out the reply with the specified replyId
+          const updatedReplies = r.reply.filter((v: any) => v.id !== itemId.e);
+
+          // Return the updated comment with the modified replies array
+          return {
+            ...r,
+            reply: updatedReplies,
+          };
+        } else {
+          return r; // If the comment id doesn't match, return the original comment unchanged
+        }
+      });
     },
-
-
-
 
     commentUpdateReducer: (state, action) => {
       state.comment = action.payload;
     },
+    commentupdateReplyReducer: (state, action) => {
+      const { item,e, message } = action.payload;
+      console.log("payload" , action.payload);
+      state.comment = state.comment.map((r: any) => {
+        console.log(r, "vlaue of r");
+
+        if (r.id ===  item) {
+          // Filter out the reply with the specified replyId
+          const updatedReplies = r.reply.map((v: any) => v.id === e?{...v,message:message}:v);
+
+         console.log(updatedReplies,"sds")
+          return {
+            ...r,
+            reply: updatedReplies,
+          };
+        } else {
+          return r; // If the comment id doesn't match, return the original comment unchanged
+        }
+      });
+      // state.comment = state.comment.map((com:any) => {
+
+      //   if (com.id === commentId) {
+      //     return {
+      //       ...com,
+      //       reply: com.reply.map((replies:any) =>
+
+      //       {replies.id === replyId ? { ...replies, message } : replies
+      //       console.log(replies , "replise");}
+            
+      //       ),
+      //     };
+      //   } else {
+      //     return com;
+      //   }
+      // });
+      // console.log("updtaecomment" ,{ ...state, comment: updatedComments});
+      
+      
+      
+      // return { ...state, comment: updatedComments };
+
+      // console.log(updatedComments, "updatecomment");
+      // state.comment = updatedComments;
+      // const { commentId, replyId, updatedText } = action.payload;
+      // // const itemId = action.payload
+      // console.log(action.payload , "red");
+      // const comments = state.comment.find((c:any) => c.id === commentId);
+      // if (comments) {
+      //   const replies = comments.reply.find((r:any) => r.id === replyId);
+      //   if (replies) {
+      //     replies.message = updatedText;
+      //   }
+      // }
+    },
   },
 });
 // Action creators are generated for each case reducer function
-export const { commentReducer, commentRemoveReducer, commentUpdateReducer  ,commentRemoveReplyReducer } =
-  userData.actions;
+export const {
+  commentReducer,
+  commentRemoveReducer,
+  commentUpdateReducer,
+  commentRemoveReplyReducer,
+  commentupdateReplyReducer,
+} = userData.actions;
 
 export default userData.reducer;

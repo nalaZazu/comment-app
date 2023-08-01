@@ -19,8 +19,9 @@ module.exports = {
         fill: ["hover", "focus"], // this line does the trick
       },
       width:{
+        40:'40.333333%',
         468:'468px',
-        40 :'40rem'
+        // 40 :'40rem'
       },
       height:{
         116:'116px'

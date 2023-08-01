@@ -1,17 +1,17 @@
 "use client";
-import CommentBox from "@/components/comment/page";
-import CommentReply from "@/components/commentReply/page";
-import MyComment from "@/components/hello/page";
 import React from "react";
+import CommentReply from "@/components/commentReply/page";
+import Header from "@/components/Header/page";
+import MessageComment from "@/components/messageComment/page";
+
 export default function Home() {
   return (
-    <div className="pt-8">
-      {/* <div className="container "> */}
-      <MyComment/>
-        {/* <CommentBox /> */}
-        
+    <div>
+      <Header />
+      <div className="{rubik.className} pt-8 mb-8">
+        <MessageComment />
         <CommentReply />
-      {/* </div> */}
+      </div>
     </div>
   );
 }

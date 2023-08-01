@@ -4,27 +4,29 @@ import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { commentReducer, userData } from "@/redux/comment";
-
-
+import { comment } from "postcss";
 const CommentForm = () => {
   let id = uuidv4();
   const [courseTitle, setCourseTitle] = useState<any>("");
 
   const getUser = useSelector((state: any) => state.login.username); 
+  const getData = useSelector((state: any) => state.comment);
+  console.log(getData , "getdatta");
+  
   const dispatch = useDispatch();
   const handleCourseSubmit = (e: any) => {
     e.preventDefault();
     if (!courseTitle) return alert("please add a course title");
-
+     
     dispatch(
-      commentReducer({
+      commentReducer({comment:[...getData.comment,{
         id: id,
         title: courseTitle,
         reply: [],
-        // data: "",
-        like: [],
+        date: new Date(),
+   
         username:getUser
-      })
+}]})
     );
     setCourseTitle("");
   };
